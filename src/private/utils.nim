@@ -62,7 +62,8 @@ func toVer*(s: static float): MajorMinorVersion{.compileTime.} =
   result.major = int(s)
   let minorS = formatFloat(s, precision = -1).split('.')[1]
   let minor = parseInt minorS
-  assert minor < int 1e10,  # 1e10 is a picked not very strictly.
+  when sizeof(int) >= 8:
+   assert minor < int 1e10,  # 1e10 is a picked not very strictly.
     "must be in format of major.minor, " & "but got " & $s
   result.minor =  minor
 
