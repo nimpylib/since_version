@@ -54,7 +54,9 @@ when defined(nimdoc):
       ## XXX: I even don't know how to add
       ##   as diagnosis tools like dumpTree just omit doc node of non-proc node
 else:
-  func addDocImplAux*(doc: string; def: NimNode): NimNode = error "only can be used when defined(nimdoc)", def
+  template unavail(def) = error "only can be used when defined(nimdoc)", def
+  func addDocImplAux*(doc: string; def: NimNode): NimNode = unavail def
+  proc genWrapCall*(sym: NimNode): NimNode = unavail sym
 
 type MajorMinorVersion* = tuple[major, minor: int]
 template toVer*(s: MajorMinorVersion): MajorMinorVersion = s
